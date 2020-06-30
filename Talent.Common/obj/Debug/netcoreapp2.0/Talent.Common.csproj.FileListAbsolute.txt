@@ -25,3 +25,12 @@ C:\Talent-Competition\Talent\Talent.Common\obj\Debug\netcoreapp2.0\Talent.Common
 C:\Talent-Competition\Talent\Talent.Common\obj\Debug\netcoreapp2.0\Talent.Common.AssemblyInfo.cs
 C:\Talent-Competition\Talent\Talent.Common\obj\Debug\netcoreapp2.0\Talent.Common.dll
 C:\Talent-Competition\Talent\Talent.Common\obj\Debug\netcoreapp2.0\Talent.Common.pdb
+D:\Downloads\IndustryConnect\Competition\Talent.Common\bin\Debug\netcoreapp2.0\Talent.Common.deps.json
+D:\Downloads\IndustryConnect\Competition\Talent.Common\bin\Debug\netcoreapp2.0\Talent.Common.dll
+D:\Downloads\IndustryConnect\Competition\Talent.Common\bin\Debug\netcoreapp2.0\Talent.Common.pdb
+D:\Downloads\IndustryConnect\Competition\Talent.Common\obj\Debug\netcoreapp2.0\Talent.Common.csprojAssemblyReference.cache
+D:\Downloads\IndustryConnect\Competition\Talent.Common\obj\Debug\netcoreapp2.0\Talent.Common.csproj.CoreCompileInputs.cache
+D:\Downloads\IndustryConnect\Competition\Talent.Common\obj\Debug\netcoreapp2.0\Talent.Common.AssemblyInfoInputs.cache
+D:\Downloads\IndustryConnect\Competition\Talent.Common\obj\Debug\netcoreapp2.0\Talent.Common.AssemblyInfo.cs
+D:\Downloads\IndustryConnect\Competition\Talent.Common\obj\Debug\netcoreapp2.0\Talent.Common.dll
+D:\Downloads\IndustryConnect\Competition\Talent.Common\obj\Debug\netcoreapp2.0\Talent.Common.pdb

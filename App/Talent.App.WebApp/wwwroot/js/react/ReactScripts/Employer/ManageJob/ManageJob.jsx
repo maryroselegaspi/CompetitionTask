@@ -5,7 +5,7 @@ import LoggedInBanner from '../../Layout/Banner/LoggedInBanner.jsx';
 import { LoggedInNavigation } from '../../Layout/LoggedInNavigation.jsx';
 import { JobSummaryCard } from './JobSummaryCard.jsx';
 import { BodyWrapper, loaderData } from '../../Layout/BodyWrapper.jsx';
-import { Pagination, Icon, Dropdown, Checkbox, Accordion, Form, Segment } from 'semantic-ui-react';
+import { Pagination, Icon, Dropdown, Checkbox, Accordion, Form, Segment, Header, Card, Label, Button } from 'semantic-ui-react';
 
 export default class ManageJob extends React.Component {
     constructor(props) {
@@ -38,9 +38,9 @@ export default class ManageJob extends React.Component {
     };
 
     init() {
-        let loaderData = TalentUtil.deepCopy(this.state.loaderData)
-        loaderData.isLoading = false;
-        this.setState({ loaderData });//comment this
+        //let loaderData = TalentUtil.deepCopy(this.state.loaderData)
+        //loaderData.isLoading = false;
+        //this.setState({ loaderData });//comment this
 
         //set loaderData.isLoading to false after getting data
         //this.loadData(() =>
@@ -48,6 +48,12 @@ export default class ManageJob extends React.Component {
         //)
         
         //console.log(this.state.loaderData)
+
+        this.loadData(() => {
+            let loaderData = TalentUtil.deepCopy(this.state.loaderData)
+            loaderData.isLoading = false;
+            this.setState({ loaderData });
+        });
     }
 
     componentDidMount() {
@@ -57,7 +63,38 @@ export default class ManageJob extends React.Component {
     loadData(callback) {
         var link = 'http://localhost:51689/listing/listing/getSortedEmployerJobs';
         var cookies = Cookies.get('talentAuthToken');
-       // your ajax call and other logic goes here
+        //your ajax call and other logic goes here
+        $.ajax({
+            url: link,
+            headers: {
+                'Authorization': 'Bearer ' + cookies,
+                'Content-Type': 'application/json'
+            },
+            type: "GET",
+            contentType: "application/json",
+            dataType: "json",
+            data: {
+                activePage: this.state.activePage,
+                sortbyDate: this.state.sortBy.date,
+                showActive: this.state.filter.showActive,
+                showClosed: this.state.filter.showClosed,
+                showDraft: this.state.filter.showDraft,
+                showExpired: this.state.filter.showExpired,
+                showUnexpired: this.state.filter.showUnexpired
+            },
+            success: function (res) {
+                if (res.myJobs) {
+                    this.state.loadJobs = res.myJobs;
+                    console.log("loadJobs Get", this.state.loadJobs);
+                }
+                console.log("result Jobs", this.state.loadJobs);
+                callback();
+            }.bind(this),
+            error: function (res) {
+                console.log(res.status);
+                callback();
+            }
+        })
     }
 
     loadNewData(data) {
@@ -75,9 +112,68 @@ export default class ManageJob extends React.Component {
     }
 
     render() {
+        let listofJobs = this.state.loadJobs;
+        console.log('listofJobs render: ', listofJobs);
+        let jobDetails = '';
+
+        if (listofJobs.length > 0) 
+              jobDetails = listofJobs.map(item => {
+                return (
+                    <Card key={item.id}>
+                        <Card.Content>
+                            <Card.Header>{item.title}</Card.Header>
+                            <Label as='a' color='black' ribbon='right'><Icon name='user' />0 </Label>
+                            <Card.Meta>
+                                {item.location.city}, { }
+                                {item.location.country}
+                            </Card.Meta>
+                            <Card.Description>{item.summary}</Card.Description>
+                        </Card.Content>
+                        <Card.Content extra>
+                            <Button color='red' floated='left' size='mini'>Expired</Button>
+                            <Button.Group floated='right' size='mini' >
+                                <Button className="ui blue basic">
+                                    <Icon name='ban' />
+                                Close
+                                </Button>
+                                <Button className="ui blue basic">
+                                    <Icon name='edit' />
+                                Edit
+                                </Button>
+                                <Button className="ui blue basic">
+                                    <Icon name='copy outline' />
+                                    Copy
+                                </Button>
+                            </Button.Group>
+                        </Card.Content>
+                    </Card>
+                    
+                    
+                    )
+
+        })
+
+               
+                
+            
+        
+        else {
+             jobDetails =<div> No Jobs Found</div>;
+            console.log("jobDetails in else:", jobDetails);
+        }
+        
+            //: jobDetails = <div> No Jobs. Please come back later!</div>
+            //    console.log("jobdetails null:", jobDetails)
+     
+        
         return (
             <BodyWrapper reload={this.init} loaderData={this.state.loaderData}>
-               <div className ="ui container">Your table goes here</div>
+                <div className="ui container">
+                    <h1>List of Jobs</h1>
+                    <Card.Group itemsPerRow={2}>
+                        {jobDetails}                         
+                    </Card.Group>       
+                </div>
             </BodyWrapper>
         )
     }
