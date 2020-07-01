@@ -4,6 +4,7 @@ import Cookies from 'js-cookie';
 import LoggedInBanner from '../../Layout/Banner/LoggedInBanner.jsx';
 import { LoggedInNavigation } from '../../Layout/LoggedInNavigation.jsx';
 import { JobSummaryCard } from './JobSummaryCard.jsx';
+import { JobPagination } from './Pagination.jsx';
 import { BodyWrapper, loaderData } from '../../Layout/BodyWrapper.jsx';
 import { Pagination, Icon, Dropdown, Checkbox, Accordion, Form, Segment, Header, Card, Label, Button } from 'semantic-ui-react';
 
@@ -23,17 +24,20 @@ export default class ManageJob extends React.Component {
             },
             filter: {
                 showActive: true,
-                showClosed: false,
-                showDraft: true,
+                showClosed: true,
+                showDraft: false,
                 showExpired: true,
                 showUnexpired: true
             },
-            totalPages: 1,
+            totalPages: 10,
             activeIndex: ""
         }
         this.loadData = this.loadData.bind(this);
         this.init = this.init.bind(this);
         this.loadNewData = this.loadNewData.bind(this);
+        this.handleFilterChange = this.handleFilterChange.bind(this);
+        this.handleCalendarChange = this.handleCalendarChange.bind(this);
+        this.handlePaginationChange = this.handlePaginationChange.bind(this);
         //your functions go here
     };
 
@@ -95,6 +99,12 @@ export default class ManageJob extends React.Component {
                 callback();
             }
         })
+        console.log('filteroptions:', this.state.filter.showActive);
+        console.log('showDraft:', this.state.filter.showDraft);
+        console.log('showClosed:', this.state.filter.showClosed);
+        console.log('showExpired:', this.state.filter.showExpired);
+        console.log('showUnexpired:', this.state.filter.showUnexpired);
+
     }
 
     loadNewData(data) {
@@ -111,7 +121,32 @@ export default class ManageJob extends React.Component {
         });
     }
 
-    render() {
+    //handle filter change
+    handleFilterChange(e, { value }) {
+        let filter = {};
+        filter["showActive"] = true;
+        filter["showClosed"] = true;
+        filter["showExpired"] = true;
+        filter["showUnexpired"] = true;
+        filter[value] = false;
+        this.setState({ filter: filter, activePage: 1 }, function () {
+            this.loadData();
+        });
+    }
+    handleCalendarChange(e, { value }){
+        let sortBy = {};
+        sortBy["date"] = value;
+        this.setState({ sortBy: sortBy, activePage: 1 }, function () {
+            this.loadData();
+        });
+    }
+
+    handlePaginationChange(e, { activePage }) {
+        this.setState({ activePage: activePage }, function () {
+            this.loadData();
+        });
+    }
+       render() {
         let listofJobs = this.state.loadJobs;
         console.log('listofJobs render: ', listofJobs);
         let jobDetails = '';
@@ -153,10 +188,6 @@ export default class ManageJob extends React.Component {
 
         })
 
-               
-                
-            
-        
         else {
              jobDetails =<div> No Jobs Found</div>;
             console.log("jobDetails in else:", jobDetails);
@@ -164,15 +195,47 @@ export default class ManageJob extends React.Component {
         
             //: jobDetails = <div> No Jobs. Please come back later!</div>
             //    console.log("jobdetails null:", jobDetails)
+        const filterOptions = [
+            { key: 'Choose Filter', text: 'Choose Filter', value: 'Choose Filter' },
+            { key: 'showActive', text: 'Active Jobs', value: 'showActive' },
+            { key: 'showClosed', text: 'Closed Jobs', value: 'showClosed' },
+            { key: 'showExpired', text: 'Expired Jobs', value: 'showExpired' },
+            { key: 'showUnexpired', text: 'Unexpired Jobs', value: 'showUnexpired' }
+        ];
+        const sortOptions = [
+            { key: 'newestJobs', text: 'Newest First', value: 'newestJobs' },
+            { key: 'oldestJobs', text: 'Oldest First', value: 'oldestJobs' }
+        ];
      
         
         return (
             <BodyWrapper reload={this.init} loaderData={this.state.loaderData}>
                 <div className="ui container">
                     <h1>List of Jobs</h1>
+                    <span>
+                        <Icon name='filter' />
+                        Filter:
+                        <Dropdown inline
+                            options={filterOptions}
+                            onChange={this.handleFilterChange}
+                        />
+                    </span>
+                    <span>
+                        <Icon name='calendar alternate' />
+                        Sort by date:
+                        <Dropdown inline
+                            options={sortOptions}
+                            onChange={this.handleFilterChange}
+                        />
+                    </span>
                     <Card.Group itemsPerRow={2}>
                         {jobDetails}                         
                     </Card.Group>       
+                    <JobPagination
+                        handlePaginationChange={this.handlePaginationChange}
+                        activePage={this.state.activePage}
+                        totalPages={this.state.totalPages}
+                    />
                 </div>
             </BodyWrapper>
         )
