@@ -5,8 +5,11 @@ import LoggedInBanner from '../../Layout/Banner/LoggedInBanner.jsx';
 import { LoggedInNavigation } from '../../Layout/LoggedInNavigation.jsx';
 import { JobSummaryCard } from './JobSummaryCard.jsx';
 import { JobPagination } from './Pagination.jsx';
+import { EditJob } from './EditJob.jsx';
 import { BodyWrapper, loaderData } from '../../Layout/BodyWrapper.jsx';
 import { Pagination, Icon, Dropdown, Checkbox, Accordion, Form, Segment, Header, Card, Label, Button } from 'semantic-ui-react';
+import CreateJob from '../CreateJob/CreateJob.jsx';
+
 
 export default class ManageJob extends React.Component {
     constructor(props) {
@@ -30,7 +33,8 @@ export default class ManageJob extends React.Component {
                 showUnexpired: true
             },
             totalPages: 10,
-            activeIndex: ""
+            activeIndex: "",
+            id:'',
         }
         this.loadData = this.loadData.bind(this);
         this.init = this.init.bind(this);
@@ -38,6 +42,7 @@ export default class ManageJob extends React.Component {
         this.handleFilterChange = this.handleFilterChange.bind(this);
         this.handleCalendarChange = this.handleCalendarChange.bind(this);
         this.handlePaginationChange = this.handlePaginationChange.bind(this);
+        this.handleEdit = this.handleEdit.bind(this);
         //your functions go here
     };
 
@@ -146,6 +151,11 @@ export default class ManageJob extends React.Component {
             this.loadData();
         });
     }
+    handleEdit(event, { id}) {
+        <EditJob
+            params={id}
+            />;
+    }
        render() {
         let listofJobs = this.state.loadJobs;
         console.log('listofJobs render: ', listofJobs);
@@ -171,7 +181,7 @@ export default class ManageJob extends React.Component {
                                     <Icon name='ban' />
                                 Close
                                 </Button>
-                                <Button className="ui blue basic">
+                                <Button className="ui blue basic" onClick={() =>  <CreateJob /> }>
                                     <Icon name='edit' />
                                 Edit
                                 </Button>
@@ -214,12 +224,13 @@ export default class ManageJob extends React.Component {
                     <h1>List of Jobs</h1>
                     <span>
                         <Icon name='filter' />
-                        Filter:
+                        Filter :
                         <Dropdown inline
                             options={filterOptions}
                             onChange={this.handleFilterChange}
                         />
                     </span>
+                    <span> </span>
                     <span>
                         <Icon name='calendar alternate' />
                         Sort by date:
@@ -228,6 +239,7 @@ export default class ManageJob extends React.Component {
                             onChange={this.handleFilterChange}
                         />
                     </span>
+                    <br/> 
                     <Card.Group itemsPerRow={2}>
                         {jobDetails}                         
                     </Card.Group>       

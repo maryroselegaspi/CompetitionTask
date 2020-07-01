@@ -45,36 +45,7 @@ export class Filters extends React.Component {
                 </span>
                 <br /> <br />
             </div>
-            //<div className="ui form">
-            //    <Form size="large">
-            //        <Form.Group inline>
-            //            <Form.Field>
-            //                <label>
-            //                    {" "}
-            //                    <Icon name="filter" />
-            //                    Filter
-            //                </label>
-            //                <Form.Select
-            //                    options={filterOptions}
-            //                    placeholder="Choose filter"
-            //                    onChange={this.props.handleFilterChange}
-            //                />
-            //            </Form.Field>
-            //            <Form.Field>
-            //                <label>
-            //                    {" "}
-            //                    <Icon name="calendar" />
-            //                    Sort by date
-            //                </label>
-            //                <Form.Select
-            //                    options={optionsByDate}
-            //                    placeholder="Newest First"
-            //                    onChange={this.props.handleCalendarChange}
-            //                />
-            //            </Form.Field>
-            //        </Form.Group>
-            //    </Form>
-            //</div>
+            
         )
     }
 }
