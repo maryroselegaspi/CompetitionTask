@@ -32,7 +32,7 @@ export default class ManageJob extends React.Component {
                 showExpired: true,
                 showUnexpired: true
             },
-            totalPages: 10,
+            totalPages: 1,
             activeIndex: "",
             id:'',
         }
@@ -247,7 +247,13 @@ export default class ManageJob extends React.Component {
                         handlePaginationChange={this.handlePaginationChange}
                         activePage={this.state.activePage}
                         totalPages={this.state.totalPages}
-                    />
+                    /> 
+
+                    {/*<Pagination
+                        defaultActivePage={this.state.activePage}
+                        totalPages={10}
+                        onPageChange={this.handlePaginationChange}
+                    /> */}
                 </div>
             </BodyWrapper>
         )

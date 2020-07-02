@@ -8,7 +8,7 @@ export class JobPagination extends React.Component {
   constructor(props) {
       super(props);
 
-      state = {
+      this.state = {
           activePage: this.props.activePage,
           boundaryRange: 0,
           siblingRange: 0,
@@ -36,19 +36,31 @@ export class JobPagination extends React.Component {
               <Grid.Row columns={1}>         
                 <Grid.Column>
                     <Pagination
-                        activePage={activePage}
-                        boundaryRange={boundaryRange}
-                        size='mini'
-                        siblingRange={siblingRange}
-                        totalPages={totalPages}
+                                defaultActivePage={activePage}
+                                boundaryRange={boundaryRange}
+                                
+                                size='mini'
+                                siblingRange={siblingRange}
+                                totalPages={totalPages}
 
-                        // Heads up! All items are powered by shorthands, if you want to hide one of them, just pass `null` as value
-                        ellipsisItem={showEllipsis}
-                        firstItem={showFirstAndLastNav }
-                        lastItem={showFirstAndLastNav }
-                        prevItem={showPreviousAndNextNav}
-                        onPageChange={this.props.handlePaginationChange}
-                        style={style}
+                                // Heads up! All items are powered by shorthands, if you want to hide one of them, just pass `null` as value
+                                
+                                //ellipsisItem={showEllipsis}
+                                //firstItem={showFirstAndLastNav}
+                                //lastItem={showFirstAndLastNav}
+                                //prevItem={showPreviousAndNextNav} 
+                               
+
+                                ellipsisItem={showEllipsis ? undefined : null}
+                                firstItem={showFirstAndLastNav ? undefined : null}
+                                lastItem={showFirstAndLastNav ? undefined : null}
+                                prevItem={showPreviousAndNextNav ? undefined : null}
+                                nextItem={showPreviousAndNextNav ? undefined : null}
+                                onPageChange={this.props.handlePaginationChange}
+
+
+                                
+                                style={style}
                   />
                 </Grid.Column>
               </Grid.Row>
