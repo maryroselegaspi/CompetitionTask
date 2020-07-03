@@ -9,6 +9,7 @@ import { EditJob } from './EditJob.jsx';
 import { BodyWrapper, loaderData } from '../../Layout/BodyWrapper.jsx';
 import { Pagination, Icon, Dropdown, Checkbox, Accordion, Form, Segment, Header, Card, Label, Button } from 'semantic-ui-react';
 import CreateJob from '../CreateJob/CreateJob.jsx';
+import { TALENT_SERVICES_TALENT } from "../../HostsUrl.jsx";
 
 
 export default class ManageJob extends React.Component {
@@ -70,7 +71,10 @@ export default class ManageJob extends React.Component {
     };
 
     loadData(callback) {
-        var link = 'http://localhost:51689/listing/listing/getSortedEmployerJobs';
+        //var link = 'http://localhost:51689/listing/listing/getSortedEmployerJobs';
+        var link = '${TALENT_SERVICES_TALENT}/listing/listing/getSortedEmployerJobs';
+
+
         var cookies = Cookies.get('talentAuthToken');
         //your ajax call and other logic goes here
         $.ajax({

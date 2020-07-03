@@ -5,6 +5,7 @@ import { BodyWrapper, loaderData } from '../Layout/BodyWrapper.jsx'
 import TalentCardDetail from '../TalentFeed/TalentCardDetail.jsx';
 import CompanyProfile from '../TalentFeed/CompanyProfile.jsx';
 import FollowingSuggestion from '../TalentFeed/FollowingSuggestion.jsx';
+import { TALENT_SERVICES_PROFILE } from '../HostsUrl.jsx';
 
 export default class TalentDetail extends React.Component {
 
@@ -16,7 +17,7 @@ export default class TalentDetail extends React.Component {
     //    this.loadData()
     //}
 
-    //loadData()  url: 'http://localhost:60290/profile/profile/getTalentProfile',
+    //loadData()  url: '${TALENT_SERVICES_PROFILE}/profile/profile/getTalentProfile',
    
     render() {
         
