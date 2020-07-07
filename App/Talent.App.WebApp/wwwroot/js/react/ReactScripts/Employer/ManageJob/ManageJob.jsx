@@ -136,16 +136,21 @@ export default class ManageJob extends React.Component {
         //filter["showExpired"] = true;
         //filter["showUnexpired"] = true;
         //filter["showDraft"] = false;
+       
+            filters["showActive"] = false;
+            filters["showClosed"] = false;
+            filters["showExpired"] = false;
+            filters["showUnexpired"] = false;
+            filters["showDraft"] = false;
+            filters[value] = true;
+            this.setState({ filter: filters, activePage: 1 }, function () {
+                this.loadData();
+            });
+            
+        
 
-        filters["showActive"] = false;
-        filters["showClosed"] = false;
-        filters["showExpired"] = false;
-        filters["showUnexpired"] = false;
-        filters["showDraft"] = false;
-        filters[value] = true;
-        this.setState({ filter: filters, activePage: 1 }, function () {
-            this.loadData();
-        });
+       
+        
     }
     handleCalendarChange(e, { value }){
         let sortBy = {};
@@ -212,7 +217,8 @@ export default class ManageJob extends React.Component {
         
 
         const filterOptions = [
-            //{ key: 'Choose Filter', text: 'Choose Filter', value: 'Choose Filter' },
+            { key: 'Choose Filter', text: 'Choose Filter', value: 'Choose Filter' },
+            //{ key: 'showAll', text: 'All Jobs', value: 'AllJobs' },
             { key: 'showActive', text: 'Active Jobs', value: 'showActive' },
             { key: 'showClosed', text: 'Closed Jobs', value: 'showClosed' },
             { key: 'showExpired', text: 'Expired Jobs', value: 'showExpired' },
