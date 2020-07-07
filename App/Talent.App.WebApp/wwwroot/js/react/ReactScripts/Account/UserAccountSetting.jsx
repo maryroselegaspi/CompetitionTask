@@ -54,7 +54,7 @@ export default class UserAccountSetting extends React.Component {
         if (field == "name") {            
             $.ajax({
                 //url: 'http://localhost:60998/authentication/authentication/changeUserName?userName=' + this.state.userName,
-                url: '${TALENT_SERVICES_IDENTITY}/authentication/authentication/changeUserName?userName=' + this.state.userName,
+                url: TALENT_SERVICES_IDENTITY +'/authentication/authentication/changeUserName?userName=' + this.state.userName,
                 type: 'POST',
                 headers: {
                     'Authorization': 'Bearer ' + cookies,
@@ -77,7 +77,7 @@ export default class UserAccountSetting extends React.Component {
             let data = this.state.password;
             $.ajax({
                 //url: 'http://localhost:60998/authentication/authentication/changePassword',
-                url: '${TALENT_SERVICES_IDENTITY}/authentication/authentication/changePassword',
+                url: TALENT_SERVICES_IDENTITY +'/authentication/authentication/changePassword',
                 type: "POST",
                 data: JSON.stringify(data),
                 headers: {
@@ -108,7 +108,7 @@ export default class UserAccountSetting extends React.Component {
         if (field == "deactivate") {
             $.ajax({
                 //url: 'http://localhost:60998/authentication/authentication/deactivateAccount',
-                url: '${TALENT_SERVICES_IDENTITY}/authentication/authentication/deactivateAccount',
+                url: TALENT_SERVICES_IDENTITY + '/authentication/authentication/deactivateAccount',
                 type: "POST",
                 headers: {
                     'Authorization': 'Bearer ' + cookies,
@@ -130,7 +130,7 @@ export default class UserAccountSetting extends React.Component {
         const cookies = Cookies.get('talentAuthToken');
         $.ajax({
             //url: 'http://localhost:60998/authentication/authentication/getAccountSettingInfo',
-            url: '${TALENT_SERVICES_IDENTITY}/authentication/authentication/getAccountSettingInfo',
+            url: TALENT_SERVICES_IDENTITY +'/authentication/authentication/getAccountSettingInfo',
             type: 'GET',
             headers: {
                 'Authorization': 'Bearer ' + cookies,

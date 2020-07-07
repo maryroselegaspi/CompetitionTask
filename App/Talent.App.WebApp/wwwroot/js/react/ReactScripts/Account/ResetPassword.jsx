@@ -43,8 +43,8 @@ export default class ResetPassword extends React.Component {
             Email: email,
             Token: token
         }
-        //let url = `http://localhost:60998/authentication/authentication/verifyResetPasswordToken?o=${email}&p=${token}`;
-        let url = `${TALENT_SERVICES_IDENTITY}/authentication/authentication/verifyResetPasswordToken?o=${email}&p=${token}`;
+        //let url = 'http://localhost:60998/authentication/authentication/verifyResetPasswordToken?o=${email}&p=${token}';
+        let url = TALENT_SERVICES_IDENTITY +'/authentication/authentication/verifyResetPasswordToken?o=${email}&p=${token}';
         $.ajax({
             url: url,
             type: 'POST',
@@ -133,7 +133,7 @@ export default class ResetPassword extends React.Component {
         let email = this.state.email;
         let token = this.state.token;
         //let resetUrl = `http://localhost:60998/authentication/authentication/resetpassword?o=${email}&p=${token}`;
-        let resetUrl = `${TALENT_SERVICES_IDENTITY}/authentication/authentication/resetpassword?o=${email}&p=${token}`;
+        let resetUrl = TALENT_SERVICES_IDENTITY +'/authentication/authentication/resetpassword?o=${email}&p=${token}';
 
         $.ajax({
             url: resetUrl,

@@ -1,7 +1,8 @@
 ﻿import React from 'react'
 import Cookies from 'js-cookie'
 import { BodyWrapper, loaderData } from '../Layout/BodyWrapper.jsx'
-import TalentCard from '../TalentFeed/TalentCard.jsx'
+import TalentCard from '../TalentFeed/TalentCard.jsx';
+import { TALENT_SERVICES_TALENT } from '../HostsUrl.jsx';
 
 export default class TalentWatchlist extends React.Component {
     constructor(props) {
@@ -18,6 +19,7 @@ export default class TalentWatchlist extends React.Component {
     }   
 
     //loadWatchlist()   url: 'http://localhost:51689/listing/listing/getWatchlist',
+     //loadWatchlist()   url: TALENT_SERVICES_TALENT +'/listing/listing/getWatchlist',
  
     render() {
        

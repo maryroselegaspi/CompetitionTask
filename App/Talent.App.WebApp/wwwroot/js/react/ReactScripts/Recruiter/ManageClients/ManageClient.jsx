@@ -7,6 +7,7 @@ import ClientTable from './ClientTable.jsx';
 import Cookies from 'js-cookie';
 import ClientProfileModal from './ClientProfile.jsx';
 import InviteClientModal from './InviteClient.jsx';
+import { TALENT_SERVICES_PROFILE, TALENT_SERVICES_IDENTITY } from '../../HostsUrl.jsx';
 
 export default class ManageClient extends React.Component {
     constructor(props) {
@@ -38,8 +39,8 @@ export default class ManageClient extends React.Component {
         this.init();
         this.loadData();
     };
-    // loadData url: '${TALENT_SERVICES_PROFILE}/profile/profile/getClientList',
-    //deleteClient  url: '${TALENT_SERVICES_IDENTITY}/authentication/authentication/deactivateClientAccount?id=' + clientId,
+    // loadData url: TALENT_SERVICES_PROFILE} +'/profile/profile/getClientList',
+    //deleteClient  url: TALENT_SERVICES_IDENTITY +'/authentication/authentication/deactivateClientAccount?id=' + clientId,
     
 
     render() {
