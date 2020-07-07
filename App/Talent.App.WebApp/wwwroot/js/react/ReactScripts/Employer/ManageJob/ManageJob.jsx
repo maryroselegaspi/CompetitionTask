@@ -106,7 +106,7 @@ export default class ManageJob extends React.Component {
                 callback();
             }
         })
-        console.log('filteroptions:', this.state.filter.showActive);
+        console.log('showActive:', this.state.filter.showActive);
         console.log('showDraft:', this.state.filter.showDraft);
         console.log('showClosed:', this.state.filter.showClosed);
         console.log('showExpired:', this.state.filter.showExpired);
@@ -130,21 +130,29 @@ export default class ManageJob extends React.Component {
 
     //handle filter change
     handleFilterChange(e, { value }) {
-        let filter = {};
-        filter["showActive"] = true;
-        filter["showClosed"] = true;
-        filter["showExpired"] = true;
-        filter["showUnexpired"] = true;
-        filter[value] = false;
-        this.setState({ filter: filter, activePage: 1 }, function () {
+        let filters = {};
+        //filter["showActive"] = true;
+        //filter["showClosed"] = true;
+        //filter["showExpired"] = true;
+        //filter["showUnexpired"] = true;
+        //filter["showDraft"] = false;
+
+        filters["showActive"] = false;
+        filters["showClosed"] = false;
+        filters["showExpired"] = false;
+        filters["showUnexpired"] = false;
+        filters["showDraft"] = false;
+        filters[value] = true;
+        this.setState({ filter: filters, activePage: 1 }, function () {
             this.loadData();
         });
     }
     handleCalendarChange(e, { value }){
         let sortBy = {};
         sortBy["date"] = value;
-        this.setState({ sortBy: sortBy, activePage: 1 }, function () {
-            this.loadData();
+        this.setState({ sortBy: sortBy, activePage: 1 },
+            function () { this.loadData();
+         
         });
     }
 
@@ -204,7 +212,7 @@ export default class ManageJob extends React.Component {
         
 
         const filterOptions = [
-            { key: 'Choose Filter', text: 'Choose Filter', value: 'Choose Filter' },
+            //{ key: 'Choose Filter', text: 'Choose Filter', value: 'Choose Filter' },
             { key: 'showActive', text: 'Active Jobs', value: 'showActive' },
             { key: 'showClosed', text: 'Closed Jobs', value: 'showClosed' },
             { key: 'showExpired', text: 'Expired Jobs', value: 'showExpired' },
@@ -233,6 +241,7 @@ export default class ManageJob extends React.Component {
                         <Icon name='calendar alternate' />
                         Sort by date:
                         <Dropdown inline
+                            
                             options={sortOptions}
                             onChange={this.handleCalendarChange}
                         />
