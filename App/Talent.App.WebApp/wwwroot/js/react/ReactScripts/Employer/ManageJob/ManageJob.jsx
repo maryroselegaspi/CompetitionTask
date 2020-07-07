@@ -73,8 +73,6 @@ export default class ManageJob extends React.Component {
     loadData(callback) {
         //var link = 'http://localhost:51689/listing/listing/getSortedEmployerJobs';
         var link = TALENT_SERVICES_TALENT +'/listing/listing/getSortedEmployerJobs';
-
-
         var cookies = Cookies.get('talentAuthToken');
         //your ajax call and other logic goes here
         $.ajax({
@@ -195,11 +193,8 @@ export default class ManageJob extends React.Component {
                                 </Button>
                             </Button.Group>
                         </Card.Content>
-                    </Card>
-                    
-                    
+                    </Card>                   
                     )
-
         })
 
         else {
@@ -207,8 +202,7 @@ export default class ManageJob extends React.Component {
             console.log("jobDetails in else:", jobDetails);
         }
         
-            //: jobDetails = <div> No Jobs. Please come back later!</div>
-            //    console.log("jobdetails null:", jobDetails)
+
         const filterOptions = [
             { key: 'Choose Filter', text: 'Choose Filter', value: 'Choose Filter' },
             { key: 'showActive', text: 'Active Jobs', value: 'showActive' },
@@ -252,12 +246,6 @@ export default class ManageJob extends React.Component {
                         activePage={this.state.activePage}
                         totalPages={this.state.totalPages}
                     /> 
-
-                    {/*<Pagination
-                        defaultActivePage={this.state.activePage}
-                        totalPages={10}
-                        onPageChange={this.handlePaginationChange}
-                    /> */}
                 </div>
             </BodyWrapper>
         )

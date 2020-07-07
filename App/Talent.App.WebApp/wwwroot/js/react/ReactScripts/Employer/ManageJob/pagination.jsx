@@ -37,29 +37,16 @@ export class JobPagination extends React.Component {
                 <Grid.Column>
                     <Pagination
                                 defaultActivePage={activePage}
-                                boundaryRange={boundaryRange}
-                                
+                                boundaryRange={boundaryRange}                           
                                 size='mini'
                                 siblingRange={siblingRange}
                                 totalPages={totalPages}
-
-                                // Heads up! All items are powered by shorthands, if you want to hide one of them, just pass `null` as value
-                                
-                                //ellipsisItem={showEllipsis}
-                                //firstItem={showFirstAndLastNav}
-                                //lastItem={showFirstAndLastNav}
-                                //prevItem={showPreviousAndNextNav} 
-                               
-
                                 ellipsisItem={showEllipsis ? undefined : null}
                                 firstItem={showFirstAndLastNav ? undefined : null}
                                 lastItem={showFirstAndLastNav ? undefined : null}
                                 prevItem={showPreviousAndNextNav ? undefined : null}
                                 nextItem={showPreviousAndNextNav ? undefined : null}
-                                onPageChange={this.props.handlePaginationChange}
-
-
-                                
+                                onPageChange={this.props.handlePaginationChange}                            
                                 style={style}
                   />
                 </Grid.Column>
