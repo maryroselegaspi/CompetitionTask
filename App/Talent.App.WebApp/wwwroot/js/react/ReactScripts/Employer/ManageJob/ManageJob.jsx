@@ -211,8 +211,8 @@ export default class ManageJob extends React.Component {
             { key: 'showUnexpired', text: 'Unexpired Jobs', value: 'showUnexpired' }
         ];
         const sortOptions = [
-            { key: 'newestJobs', text: 'Newest First', value: 'newestJobs' },
-            { key: 'oldestJobs', text: 'Oldest First', value: 'oldestJobs' }
+            { key: 'newestJobs', text: 'Newest First', value: 'desc' },
+            { key: 'oldestJobs', text: 'Oldest First', value: 'asc' }
         ];
      
         
@@ -234,7 +234,7 @@ export default class ManageJob extends React.Component {
                         Sort by date:
                         <Dropdown inline
                             options={sortOptions}
-                            onChange={this.handleFilterChange}
+                            onChange={this.handleCalendarChange}
                         />
                     </span>
                     <br/> 

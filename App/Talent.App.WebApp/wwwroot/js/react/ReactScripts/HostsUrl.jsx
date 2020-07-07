@@ -1,5 +1,5 @@
 ﻿
- //Development url
+// //Development url
 export const TALENT_APP_WEBAPP = 'http://localhost:61771';
 export const TALENT_API = 'http://localhost:60880';
 export const TALENT_SERVICES_IDENTITY = 'http://localhost:60998';
