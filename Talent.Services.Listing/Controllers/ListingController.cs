@@ -182,14 +182,14 @@ namespace Talent.Services.Listing.Controllers
                 //    sortedJobs = sortedJobs.Where(x => x.Status != JobStatus.Closed);
                 //}
 
-                //if (!showExpired)
-                //{
-                //    sortedJobs = sortedJobs.Where(x => x.ExpiryDate >= DateTime.UtcNow);
-                //}
-                //if (!showUnexpired)
-                //{
-                //    sortedJobs = sortedJobs.Where(x => x.ExpiryDate < DateTime.UtcNow);
-                //}
+                if (!showExpired)
+                {
+                    sortedJobs = sortedJobs.Where(x => x.ExpiryDate >= DateTime.UtcNow);
+                }
+                if (!showUnexpired)
+                {
+                    sortedJobs = sortedJobs.Where(x => x.ExpiryDate < DateTime.UtcNow);
+                }
 
 
 
@@ -209,20 +209,20 @@ namespace Talent.Services.Listing.Controllers
 
                 //}
 
-                if (!showExpired)
-                {
-                    var returnJobs = sortedJobs.Where(x => x.ExpiryDate >= DateTime.UtcNow).Skip((activePage - 1) * limit).Take(limit)
-                        .Select(x => new { x.Id, x.Title, x.Summary, x.JobDetails.Location, x.ExpiryDate, x.Status, noOfSuggestions = x.TalentSuggestions != null && x.TalentSuggestions.Count != 0 ? x.TalentSuggestions.Count : 0 });
-                    return Json(new { Success = true, MyJobs = returnJobs, TotalCount = sortedJobs.Count() });
-                }
+                //if (!showExpired)
+                //{
+                //    var returnJobs = sortedJobs.Where(x => x.ExpiryDate >= DateTime.UtcNow).Skip((activePage - 1) * limit).Take(limit)
+                //        .Select(x => new { x.Id, x.Title, x.Summary, x.JobDetails.Location, x.ExpiryDate, x.Status, noOfSuggestions = x.TalentSuggestions != null && x.TalentSuggestions.Count != 0 ? x.TalentSuggestions.Count : 0 });
+                //    return Json(new { Success = true, MyJobs = returnJobs, TotalCount = sortedJobs.Count() });
+                //}
 
-                if (!showUnexpired)
-                {
-                    //sortedJobs = sortedJobs.Where(x => x.ExpiryDate < DateTime.UtcNow);
-                    var returnJobs = sortedJobs.Where(x => x.ExpiryDate < DateTime.UtcNow).Skip((activePage - 1) * limit).Take(limit)
-                        .Select(x => new { x.Id, x.Title, x.Summary, x.JobDetails.Location, x.ExpiryDate, x.Status, noOfSuggestions = x.TalentSuggestions != null && x.TalentSuggestions.Count != 0 ? x.TalentSuggestions.Count : 0 });
-                    return Json(new { Success = true, MyJobs = returnJobs, TotalCount = sortedJobs.Count() });
-                }
+                //if (!showUnexpired)
+                //{
+                //    //sortedJobs = sortedJobs.Where(x => x.ExpiryDate < DateTime.UtcNow);
+                //    var returnJobs = sortedJobs.Where(x => x.ExpiryDate < DateTime.UtcNow).Skip((activePage - 1) * limit).Take(limit)
+                //        .Select(x => new { x.Id, x.Title, x.Summary, x.JobDetails.Location, x.ExpiryDate, x.Status, noOfSuggestions = x.TalentSuggestions != null && x.TalentSuggestions.Count != 0 ? x.TalentSuggestions.Count : 0 });
+                //    return Json(new { Success = true, MyJobs = returnJobs, TotalCount = sortedJobs.Count() });
+                //}
 
                 //TODO Draft not implemented yet
                 //if (!showDraft)

@@ -43,7 +43,7 @@ export default class ManageJob extends React.Component {
         this.handleFilterChange = this.handleFilterChange.bind(this);
         this.handleCalendarChange = this.handleCalendarChange.bind(this);
         this.handlePaginationChange = this.handlePaginationChange.bind(this);
-        this.handleEdit = this.handleEdit.bind(this);
+        //this.handleEdit = this.handleEdit.bind(this);
         //your functions go here
     };
 
@@ -143,7 +143,8 @@ export default class ManageJob extends React.Component {
             filters["showUnexpired"] = false;
             filters["showDraft"] = false;
             filters[value] = true;
-            this.setState({ filter: filters, activePage: 1 }, function () {
+        this.setState({
+            filter: filters, sortBy: {date: 'desc'}, activePage: 1 }, function () {
                 this.loadData();
             });
             
@@ -154,8 +155,15 @@ export default class ManageJob extends React.Component {
     }
     handleCalendarChange(e, { value }){
         let sortBy = {};
+        let filters = {};
         sortBy["date"] = value;
-        this.setState({ sortBy: sortBy, activePage: 1 },
+       
+        filters["showActive"] = true;
+        filters["showClosed"] = true;
+        filters["showExpired"] = true;
+        filters["showUnexpired"] = true;
+        filters["showDraft"] = false;
+        this.setState({ sortBy: sortBy, filter: filters, activePage: 1 },
             function () { this.loadData();
          
         });
@@ -166,12 +174,14 @@ export default class ManageJob extends React.Component {
             this.loadData();
         });
     }
-    handleEdit(event, { id}) {
-        <EditJob
-            params={id}
-            />;
-    }
+    //handleEdit(event, { id}) {
+    //    <EditJob
+    //        params={id}
+    //        />;
+    //}
        render() {
+
+        
         let listofJobs = this.state.loadJobs;
         console.log('listofJobs render: ', listofJobs);
         let jobDetails = '';
@@ -189,8 +199,8 @@ export default class ManageJob extends React.Component {
                             </Card.Meta>
                             <Card.Description>{item.summary}</Card.Description>
                         </Card.Content>
-                        <Card.Content extra>
-                            <Button color='red' floated='left' size='mini'>Expired</Button>
+                        <Card.Content extra>                          
+                            <Button color='red' floated='left' size='mini'>Expired</Button>                        
                             <Button.Group floated='right' size='mini' >
                                 <Button className="ui blue basic">
                                     <Icon name='ban' />
@@ -217,7 +227,7 @@ export default class ManageJob extends React.Component {
         
 
         const filterOptions = [
-            { key: 'Choose Filter', text: 'Choose Filter', value: 'Choose Filter' },
+            //{ key: 'Choose Filter', text: 'Choose Filter', value: 'Choose Filter' },
             //{ key: 'showAll', text: 'All Jobs', value: 'AllJobs' },
             { key: 'showActive', text: 'Active Jobs', value: 'showActive' },
             { key: 'showClosed', text: 'Closed Jobs', value: 'showClosed' },
@@ -225,8 +235,8 @@ export default class ManageJob extends React.Component {
             { key: 'showUnexpired', text: 'Unexpired Jobs', value: 'showUnexpired' }
         ];
         const sortOptions = [
-            { key: 'newestJobs', text: 'Newest First', value: 'desc' },
-            { key: 'oldestJobs', text: 'Oldest First', value: 'asc' }
+            { key: 'newestJobs', text: 'Newest First', value: 'asc' },
+            { key: 'oldestJobs', text: 'Oldest First', value: 'desc' }
         ];
      
         
@@ -238,6 +248,7 @@ export default class ManageJob extends React.Component {
                         <Icon name='filter' />
                         Filter :
                         <Dropdown inline
+                            placeholder="Filter by Status"
                             options={filterOptions}
                             onChange={this.handleFilterChange}
                         />
@@ -246,8 +257,8 @@ export default class ManageJob extends React.Component {
                     <span>
                         <Icon name='calendar alternate' />
                         Sort by date:
-                        <Dropdown inline
-                            
+                        <Dropdown inline    
+                            placeholder="Filter by Date"
                             options={sortOptions}
                             onChange={this.handleCalendarChange}
                         />
