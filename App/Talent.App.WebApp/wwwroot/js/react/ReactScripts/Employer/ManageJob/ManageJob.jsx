@@ -44,6 +44,7 @@ export default class ManageJob extends React.Component {
         this.handleCalendarChange = this.handleCalendarChange.bind(this);
         this.handlePaginationChange = this.handlePaginationChange.bind(this);
         this.handleClick = this.handleClick.bind(this);
+        this.closeJob = this.closeJob.bind(this);
   
         //your functions go here
     };
@@ -115,6 +116,30 @@ export default class ManageJob extends React.Component {
         console.log('showUnexpired:', this.state.filter.showUnexpired);
 
     }
+    //Close Job
+    closeJob(id) {
+        var cookies = Cookies.get('talentAuthToken');
+        $.ajax({
+            url: TALENT_SERVICES_TALENT+'/listing/listing/closeJob',
+            headers: {
+                'Authorization': 'Bearer ' + cookies,
+                'Content-Type': 'application/json'
+            },
+            dataType: 'json',
+            type: "post",
+            data: JSON.stringify(id),
+            success: function (res) {
+                if (res.success == true) {
+                    this.loadData();
+                    //alert(res.message, "success", null, null)
+                    TalentUtil.notification.show(res.message, "success", null, null)
+                } else {
+                    //alert(res.message, "error", null, null)
+                    TalentUtil.notification.show(res.message, "error", null, null)
+                }
+            }.bind(this)
+        })
+    }
 
     loadNewData(data) {
         var loader = this.state.loaderData;
@@ -185,9 +210,9 @@ export default class ManageJob extends React.Component {
                         <Card.Content extra>                          
                             <Button color='red' floated='left' size='mini'>Expired</Button>                        
                             <Button.Group floated='right' size='mini' >
-                                <Button className="ui blue basic"> <Icon name='ban' /> Close </Button>
-                                <Button className="ui blue basic" onClick={() =>  <CreateJob /> }> <Icon name='edit' /> Edit </Button>
-                                <Button className="ui blue basic"> <Icon name='copy outline' /> Copy</Button>
+                                <Button className="ui blue basic" onClick={() => this.closeJob(item.id)}> <Icon name='ban' /> Close </Button>
+                                <Button className="ui blue basic" onClick={() => { window.location = "/EditJob/" + item.id }}> <Icon name='edit' /> Edit </Button>
+                                <Button className="ui blue basic" onClick={() => {window.location="/PostJob/" + item.id }}> <Icon name='copy outline' /> Copy</Button>
                             </Button.Group>
                         </Card.Content>
                     </Card>                   
