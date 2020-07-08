@@ -98,7 +98,7 @@ export default class ManageJob extends React.Component {
             },
             success: function (res) {
                 if (res.myJobs) {
-                    this.state.loadJobs = res.myJobs;
+                    this.setState({ loadJobs: res.myJobs, totalPages: Math.ceil(res.totalCount / 6) });
                     console.log("loadJobs Get", this.state.loadJobs);
                 }
                 console.log("result Jobs", this.state.loadJobs);
