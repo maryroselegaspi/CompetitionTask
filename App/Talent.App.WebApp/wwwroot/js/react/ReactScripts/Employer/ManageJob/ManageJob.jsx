@@ -43,7 +43,8 @@ export default class ManageJob extends React.Component {
         this.handleFilterChange = this.handleFilterChange.bind(this);
         this.handleCalendarChange = this.handleCalendarChange.bind(this);
         this.handlePaginationChange = this.handlePaginationChange.bind(this);
-        //this.handleEdit = this.handleEdit.bind(this);
+        this.handleClick = this.handleClick.bind(this);
+  
         //your functions go here
     };
 
@@ -74,6 +75,7 @@ export default class ManageJob extends React.Component {
         //var link = 'http://localhost:51689/listing/listing/getSortedEmployerJobs';
         var link = TALENT_SERVICES_TALENT +'/listing/listing/getSortedEmployerJobs';
         var cookies = Cookies.get('talentAuthToken');
+
         //your ajax call and other logic goes here
         $.ajax({
             url: link,
@@ -128,44 +130,17 @@ export default class ManageJob extends React.Component {
         });
     }
 
-    //handle filter change
-    handleFilterChange(e, { value }) {
-        let filters = {};
-        //filter["showActive"] = true;
-        //filter["showClosed"] = true;
-        //filter["showExpired"] = true;
-        //filter["showUnexpired"] = true;
-        //filter["showDraft"] = false;
-       
-            filters["showActive"] = false;
-            filters["showClosed"] = false;
-            filters["showExpired"] = false;
-            filters["showUnexpired"] = false;
-            filters["showDraft"] = false;
-            filters[value] = true;
-        this.setState({
-            filter: filters, sortBy: {date: 'desc'}, activePage: 1 }, function () {
-                this.loadData();
-            });
-            
-        
-
-       
-        
-    }
     handleCalendarChange(e, { value }){
         let sortBy = {};
         let filters = {};
-        sortBy["date"] = value;
-       
+        sortBy["date"] = value;     
         filters["showActive"] = true;
         filters["showClosed"] = true;
         filters["showExpired"] = true;
         filters["showUnexpired"] = true;
         filters["showDraft"] = false;
         this.setState({ sortBy: sortBy, filter: filters, activePage: 1 },
-            function () { this.loadData();
-         
+            function () { this.loadData();        
         });
     }
 
@@ -174,19 +149,27 @@ export default class ManageJob extends React.Component {
             this.loadData();
         });
     }
-    //handleEdit(event, { id}) {
-    //    <EditJob
-    //        params={id}
-    //        />;
-    //}
-       render() {
 
-        
+    handleFilterChange(e, { checked, name }) {
+        this.state.filter[name] = checked;
+        this.setState({
+            filter: this.state.filter
+        })
+    }
+
+    handleClick(e, titleProps) {
+        const { index } = titleProps
+        const { activeIndex } = this.state
+        const newIndex = activeIndex === index ? -1 : index
+        this.setState({ activeIndex: newIndex })
+    }
+
+       render() {    
         let listofJobs = this.state.loadJobs;
         console.log('listofJobs render: ', listofJobs);
         let jobDetails = '';
 
-        if (listofJobs.length > 0) 
+        if (listofJobs && listofJobs.length > 0) 
               jobDetails = listofJobs.map(item => {
                 return (
                     <Card key={item.id}>
@@ -202,38 +185,19 @@ export default class ManageJob extends React.Component {
                         <Card.Content extra>                          
                             <Button color='red' floated='left' size='mini'>Expired</Button>                        
                             <Button.Group floated='right' size='mini' >
-                                <Button className="ui blue basic">
-                                    <Icon name='ban' />
-                                Close
-                                </Button>
-                                <Button className="ui blue basic" onClick={() =>  <CreateJob /> }>
-                                    <Icon name='edit' />
-                                Edit
-                                </Button>
-                                <Button className="ui blue basic">
-                                    <Icon name='copy outline' />
-                                    Copy
-                                </Button>
+                                <Button className="ui blue basic"> <Icon name='ban' /> Close </Button>
+                                <Button className="ui blue basic" onClick={() =>  <CreateJob /> }> <Icon name='edit' /> Edit </Button>
+                                <Button className="ui blue basic"> <Icon name='copy outline' /> Copy</Button>
                             </Button.Group>
                         </Card.Content>
                     </Card>                   
-                    )
+                )
         })
-
         else {
              jobDetails =<div> No Jobs Found</div>;
             console.log("jobDetails in else:", jobDetails);
         }
         
-
-        const filterOptions = [
-            //{ key: 'Choose Filter', text: 'Choose Filter', value: 'Choose Filter' },
-            //{ key: 'showAll', text: 'All Jobs', value: 'AllJobs' },
-            { key: 'showActive', text: 'Active Jobs', value: 'showActive' },
-            { key: 'showClosed', text: 'Closed Jobs', value: 'showClosed' },
-            { key: 'showExpired', text: 'Expired Jobs', value: 'showExpired' },
-            { key: 'showUnexpired', text: 'Unexpired Jobs', value: 'showUnexpired' }
-        ];
         const sortOptions = [
             { key: 'newestJobs', text: 'Newest First', value: 'asc' },
             { key: 'oldestJobs', text: 'Oldest First', value: 'desc' }
@@ -245,25 +209,34 @@ export default class ManageJob extends React.Component {
                 <div className="ui container">
                     <h1>List of Jobs</h1>
                     <span>
-                        <Icon name='filter' />
-                        Filter :
-                        <Dropdown inline
-                            placeholder="Filter by Status"
-                            options={filterOptions}
-                            onChange={this.handleFilterChange}
-                        />
-                    </span>
-                    <span> </span>
+                        <Icon name='filter' /> {" Filter : "}
+                        <Dropdown inline simple text="Choose filter">
+                                        <Dropdown.Menu>
+                                            <Dropdown.Item key={"status"}>
+                                                <Accordion>
+                                                    <Accordion.Title active={this.state.activeIndex === 1} index={1} onClick={this.handleClick}><Icon name='dropdown' /> By Status </Accordion.Title>
+                                                    <Accordion.Content active={this.state.activeIndex === 1}>
+                                                        <Form>
+                                                            <Form.Group grouped>
+                                                                <Form.Checkbox label='Active Jobs' name="showActive" onChange={this.handleFilterChange} checked={this.state.filter.showActive} />
+                                                                <Form.Checkbox label='Closed Jobs' name="showClosed" onChange={this.handleFilterChange} checked={this.state.filter.showClosed} />
+                                                                <Form.Checkbox label='Expired Jobs' name="showExpired" onChange={this.handleFilterChange} checked={this.state.filter.showExpired} />
+                                                                <Form.Checkbox label='Unexpired Jobs' name="showUnexpired" onChange={this.handleFilterChange} checked={this.state.filter.showUnexpired} />                                                        
+                                                            </Form.Group>
+                                                        </Form>
+                                                    </Accordion.Content>
+                                                </Accordion>
+                                            </Dropdown.Item>
+                                            <Button className="ui teal small button" style={{ width: "100%", borderRadius: "0" }} onClick={() => this.loadNewData({ activePage: 1 })}>
+                                                <Icon name='filter' /> Filter
+                                            </Button>
+                                        </Dropdown.Menu>
+                                    </Dropdown>
+                    </span> 
                     <span>
-                        <Icon name='calendar alternate' />
-                        Sort by date:
-                        <Dropdown inline    
-                            placeholder="Filter by Date"
-                            options={sortOptions}
-                            onChange={this.handleCalendarChange}
-                        />
+                        <Icon name='calendar alternate' /> {" Sort by date : "}
+                        <Dropdown inline  name="date"options={sortOptions} onChange={this.handleCalendarChange}/> 
                     </span>
-                    <br/> 
                     <Card.Group itemsPerRow={2}>
                         {jobDetails}                         
                     </Card.Group>       
