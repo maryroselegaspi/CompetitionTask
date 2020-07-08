@@ -164,15 +164,17 @@ export default class ManageJob extends React.Component {
         filters["showExpired"] = true;
         filters["showUnexpired"] = true;
         filters["showDraft"] = false;
-        this.setState({ sortBy: sortBy, filter: filters, activePage: 1 },
-            function () { this.loadData();        
-        });
+        //this.setState({ sortBy: sortBy, filter: filters, activePage: 1 },
+        //    function () {
+        //        this.loadData();    
+                
+        //    });
+        this.loadData(() => this.setState({ sortBy: sortBy, filter: filters, activePage: 1 }))
     }
 
     handlePaginationChange(e, { activePage }) {
-        this.setState({ activePage: activePage }, function () {
-            this.loadData();
-        });
+        this.loadData(() => this.setState({ activePage: activePage }));
+        
     }
 
     handleFilterChange(e, { checked, name }) {
